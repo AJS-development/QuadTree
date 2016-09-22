@@ -12,7 +12,6 @@ height: 100
 })
 
 var node = {
-id: 0,
 bounds: {x:10,y:10,width:0,height:0}
 }
 quadtree.insert(node)
