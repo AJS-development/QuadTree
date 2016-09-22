@@ -135,3 +135,4 @@ var QTree = class QTree{
   }
   
 }
+module.exports = QTree
