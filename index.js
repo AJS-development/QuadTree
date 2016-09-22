@@ -5,10 +5,11 @@ var QTree = class QTree{
   constructor(bounds,maxobj,maxlevl,level,parent,master,id) {
   this.bounds = bounds;
     this.neighbors = [];
-  this.maxobj = maxobj
-  this.maxlevl = maxlevl;
+  this.maxobj = (maxobj) ? maxobj : 4
+  this.maxlevl = (maxlevl) ? maxlevl : 10;
   this.master = (master) ? master : this;
-  this.level = level
+  this.level = (level) ? level : 0
+  
   this.parent = parent;
       this.allnodes = []
       this.nodes = []
