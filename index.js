@@ -1,4 +1,6 @@
-// No license! you are free to use. But please keep this link (https://github.com/AJS-development/QuadTree) so others can also use this
+"use strict";
+// No license! you are free to use. 
+// But please keep this link (https://github.com/AJS-development/QuadTree) so others can also use this
 
 var QTree = class QTree{
   
