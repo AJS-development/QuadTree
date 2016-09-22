@@ -15,6 +15,21 @@ var QTree = class QTree{
       this.child = [];
       this.id = id;
   }
+  get(id) {
+    return this.nodes.get(id);
+  }
+  getNodes() {
+    return this.nodes;
+  }
+  getQuad(bounds) {
+    var ind = this.getIndex(bounds)
+    if (ind != -1) {
+      return this.child[ind].getQuad(bounds)
+      
+    }
+    return this;
+    
+  }
     doesFit(bounds) {
         if (bounds.x < this.bounds.x || bounds.y < this.bounds.y || bounds.x + bounds.width > this.bounds.x + this.bounds.width || bounds.y + bounds.height > this.bounds.y + this.bounds.height) return false
         return true;
