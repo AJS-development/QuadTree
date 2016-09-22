@@ -30,8 +30,9 @@ var QTree = class QTree{
     for (var i in this.child) len += this.child[i].getNodesRecurLength() 
     return len
   }
- resortBranch(branch) {
-   var nodes = branch.getNodesRecur;
+ resortBranch() {
+   var nodes = this.getNodesRecur;
+   this.clear()
    nodes.forEach((node)=>{
      this.insert(node)
    })
@@ -101,7 +102,7 @@ var QTree = class QTree{
       if (!this.child[0]) return;
      var nodes = this.getNodesRecur();
       if (nodes.length > this.maxobj) return;
-      this.resortBranch(this)
+      this.resortBranch()
     }
     balance(a) {
      if (!a) this.checkForMax()
