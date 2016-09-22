@@ -10,14 +10,12 @@ var QTree = class QTree{
   this.master = (master) ? master : this;
   this.level = level
   this.parent = parent;
-      this.allnodes = new QuickMap();
-      this.nodes = new QuickMap();
+      this.allnodes = []
+      this.nodes = []
       this.child = [];
       this.id = id;
   }
-  get(id) {
-    return this.nodes.get(id);
-  }
+ 
   getNodes() {
     return this.nodes;
   }
@@ -68,14 +66,15 @@ var QTree = class QTree{
     }
     
     delete(node) {
-        this.master.allnodes.delete(node.id)
+      var ind = this.master.allnodes.indexOf(node)
+        if (ind != -1) this.master.allnodes.splice(ind,1)
      if (node.QTree) {
          node.QTree.remove(node)
      }
     }
     remove(node) {
-        
-        this.nodes.delete(node.id)
+         var ind = this.nodes.indexOf(node)
+        if (ind != -1) this.nodes.splice(ind,1)
         node.QTree = false;
     }
     pres(bound) {
@@ -101,7 +100,7 @@ var QTree = class QTree{
                  |
         3        |         4
         */
-        var nodes = new QuickMap()
+        var nodes = []
           if (!this.child[0]) return this.nodes;
         for (var i = 0; i < this.child.length; i ++) {
             if (this.child[i].pres(bounds)) {
@@ -112,7 +111,7 @@ var QTree = class QTree{
     }
     
   insert(node) {
-      if (this.level == 0) this.allnodes.set(node.id,node)
+      if (this.level == 0 && this.allnodes.indexOf(node) == -1) this.allnodes.push(node)
       if (child[0]) {
       var index = this.getIndex(node.bounds)
       if (index != -1) {
@@ -123,7 +122,7 @@ var QTree = class QTree{
       if (node.QTree) node.QTree.remove(node)
       if (node.QTree) throw "Node cannot have two QTrees"
       node.QTree = this;
-          this.nodes.set(node.id,node)
+          this.nodes.push(node)
       if (this.nodes.length > this.maxobj && this.level < this.maxlevl) {
           if (!this.child[0]) this.split()
           this.nodes.forEach((n)=>{
