@@ -18,7 +18,24 @@ var QTree = class QTree{
       this.child = [];
       this.id = id;
   }
- 
+  getNodesRecur() {
+    var nodes = [];
+    nodes.concat(this.nodes)
+    for (var i in this.child) nodes.concat(this.child[i].getNodesRecur())
+    return nodes
+  }
+  getNodesRecurLength() {
+    var len = 0;
+    len += this.nodes.length;
+    for (var i in this.child) len += this.child[i].getNodesRecurLength() 
+    return len
+  }
+ resortBranch(branch) {
+   var nodes = branch.getNodesRecur;
+   nodes.forEach((node)=>{
+     this.insert(node)
+   })
+ }
   getNodes() {
     return this.nodes;
   }
@@ -67,17 +84,45 @@ var QTree = class QTree{
         this.child[2] = new QTree({width: wid, height: hei, x: x, y: y + hei},this.maxobj,this.maxlvl,this.level + 1,this,this.master,2)
         this.child[3] = new QTree({width: wid, height: hei, x: x + wid, y: y + hei},this.maxobj,this.maxlvl,this.level + 1,this,this.master,3)
     }
-    
+    checkForMax() {
+      if (this.child[0]) {
+        return;
+        
+      } else
+      if (this.objects.length > this.maxobj) {
+        this.split();
+        this.nodes.forEach((n)=>{
+              var ind = this.getIndex(n.bounds);
+              if (ind != -1) this.child[ind].insert(n)
+          })
+      }
+    }
+    checkForMin() {
+      if (!this.child[0]) return;
+     var nodes = this.getNodesRecur();
+      if (nodes.length > this.maxobj) return;
+      this.resortBranch(this)
+    }
+    balance() {
+      this.checkForMax()
+      this.checkForMin()
+      this.child.forEach((c)=>{
+        c.balance()
+      })
+    }
     delete(node) {
       var ind = this.master.allnodes.indexOf(node)
         if (ind != -1) this.master.allnodes.splice(ind,1)
      if (node.QTree) {
+      
          node.QTree.remove(node)
      }
+     
     }
     remove(node) {
          var ind = this.nodes.indexOf(node)
         if (ind != -1) this.nodes.splice(ind,1)
+        node.QTree.parent.balance()
         node.QTree = false;
     }
     pres(bound) {
