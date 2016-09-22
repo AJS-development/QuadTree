@@ -85,7 +85,7 @@ var QTree = class QTree{
         return false;
     }
     clear() {
-    this.nodes.clear();
+    this.nodes = [];
         for (var i in this.child) {
             this.child[i].clear();
             this.child[i] = false;
