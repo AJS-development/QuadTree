@@ -103,8 +103,8 @@ var QTree = class QTree{
       if (nodes.length > this.maxobj) return;
       this.resortBranch(this)
     }
-    balance() {
-      this.checkForMax()
+    balance(a) {
+     if (!a) this.checkForMax()
       this.checkForMin()
       this.child.forEach((c)=>{
         c.balance()
@@ -122,7 +122,7 @@ var QTree = class QTree{
     remove(node) {
          var ind = this.nodes.indexOf(node)
         if (ind != -1) this.nodes.splice(ind,1)
-        node.QTree.parent.balance()
+        node.QTree.parent.balance(true)
         node.QTree = false;
     }
     pres(bound) {
