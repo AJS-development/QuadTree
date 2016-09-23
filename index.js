@@ -32,7 +32,7 @@ var QTree = class QTree{
   }
  resortBranch() {
    var nodes = this.getNodesRecur;
-   this.clear()
+   this.child = []
    nodes.forEach((node)=>{
      this.insert(node)
    })
