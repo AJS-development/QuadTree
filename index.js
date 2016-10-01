@@ -2,7 +2,7 @@
 // No license! you are free to use. 
 // But please keep this link (https://github.com/AJS-development/QuadTree) so others can also use this
 
-var QTree = class QTree{
+var QTree = class QTree {
   
   constructor(bounds,maxobj,maxlevl,level,parent,master,id) {
   this.bounds = bounds;
@@ -10,8 +10,7 @@ var QTree = class QTree{
   this.maxobj = (maxobj) ? maxobj : 4
   this.maxlevl = (maxlevl) ? maxlevl : 10;
   this.master = (master) ? master : this;
-  this.level = (level) ? level : 0
-  
+  this.level = (level) ? level : 0;
   this.parent = parent;
       this.allnodes = []
       this.nodes = []
@@ -79,7 +78,8 @@ var QTree = class QTree{
     split() {
         var wid = this.bounds.width/2
         var hei = this.bounds.height/2
-        
+        var x = this.bounds.x
+        var y = this.bounds.y
         this.child[0] = new QTree({width: wid, height: hei, x: x + wid, y: y},this.maxobj,this.maxlvl,this.level + 1,this,this.master,0)
         this.child[1] = new QTree({width: wid, height: hei, x: x, y: y},this.maxobj,this.maxlvl,this.level + 1,this,this.master,1)
         this.child[2] = new QTree({width: wid, height: hei, x: x, y: y + hei},this.maxobj,this.maxlvl,this.level + 1,this,this.master,2)
@@ -100,16 +100,17 @@ var QTree = class QTree{
     }
     checkForMin() {
       if (!this.child[0]) return;
+        if (this.child[0].child[0]) return
      var nodes = this.getNodesRecur();
       if (nodes.length > this.maxobj) return;
       this.resortBranch()
     }
-    balance(a) {
-     if (!a) this.checkForMax()
+    balance() {
+        
+        
+     this.checkForMax()
       this.checkForMin()
-      this.child.forEach((c)=>{
-        c.balance()
-      })
+     
     }
     delete(node) {
       var ind = this.master.allnodes.indexOf(node)
@@ -123,7 +124,8 @@ var QTree = class QTree{
     remove(node) {
          var ind = this.nodes.indexOf(node)
         if (ind != -1) this.nodes.splice(ind,1)
-        node.QTree.parent.balance(true)
+        
+        if (node.QTree.parent) node.QTree.parent.balance(true)
         node.QTree = false;
     }
     pres(bound) {
@@ -161,7 +163,8 @@ var QTree = class QTree{
     
   insert(node) {
       if (this.level == 0 && this.allnodes.indexOf(node) == -1) this.allnodes.push(node)
-      if (child[0]) {
+      if (this.child[0]) {
+         
       var index = this.getIndex(node.bounds)
       if (index != -1) {
           this.child[index].insert(node)
