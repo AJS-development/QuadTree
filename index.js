@@ -129,7 +129,7 @@ var QTree = class QTree {
     }
     pres(bound) {
   
-        if (bound.x > this.bounds.x || bound.x + bound.width > this.bound.x || bound.y > this.bounds.y || bound.y + bound.height > this.bounds.y) return true;
+        if (bound.x > this.bounds.x || bound.x + bound.width > this.bounds.x || bound.y > this.bounds.y || bound.y + bound.height > this.bounds.y) return true;
         return false;
     }
     clear() {
