@@ -18,8 +18,8 @@ var QTree = class QTree {
   }
   getNodesRecur() {
     var nodes = [];
-    nodes.concat(this.nodes)
-    for (var i in this.child) nodes.concat(this.child[i].getNodesRecur())
+   nodes = nodes.concat(this.nodes)
+    for (var i in this.child) nodes = nodes.concat(this.child[i].getNodesRecur())
     return nodes
   }
   getNodesRecurLength() {
@@ -72,6 +72,7 @@ var QTree = class QTree {
             }
             
         }
+        
         return ind;
         }
     split() {
@@ -153,17 +154,17 @@ var QTree = class QTree {
         */
         var nodes = []
        
-          if (!this.child[0]) return this.nodes;
+          nodes = nodes.concat(this.nodes);
         for (var i = 0; i < this.child.length; i ++) {
             if (this.child[i].pres(bounds)) {
-                nodes.concat(this.child[i].getWithMerged(bounds))
+                
+               nodes = nodes.concat(this.child[i].getWithMerged(bounds))
             }
         }
         return nodes;
     }
     
   insert(node) {
-
       if (this.level == 0 && this.allnodes.indexOf(node) == -1) this.allnodes.push(node)
       if (this.child[0]) {
          
