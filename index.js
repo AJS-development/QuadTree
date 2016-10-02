@@ -1,7 +1,6 @@
 "use strict";
 // No license! you are free to use. 
 // But please keep this link (https://github.com/AJS-development/QuadTree) so others can also use this
-
 var QTree = class QTree {
   
   constructor(bounds,maxobj,maxlevl,level,parent,master,id) {
@@ -32,7 +31,7 @@ var QTree = class QTree {
  resortBranch() {
    var nodes = this.getNodesRecur;
    this.child = []
-   nodes.forEach((node)=>{
+   this.nodes.forEach((node)=>{
      this.insert(node)
    })
  }
@@ -129,7 +128,8 @@ var QTree = class QTree {
         node.QTree = false;
     }
     pres(bound) {
-        if (bound.x > this.bound.x || bound.x + bound.width > this.bound.x || bound.y > this.bound.y || bound.y + bound.height > this.bound.y) return true;
+  
+        if (bound.x > this.bounds.x || bound.x + bound.width > this.bound.x || bound.y > this.bounds.y || bound.y + bound.height > this.bounds.y) return true;
         return false;
     }
     clear() {
@@ -152,16 +152,18 @@ var QTree = class QTree {
         3        |         4
         */
         var nodes = []
+       
           if (!this.child[0]) return this.nodes;
         for (var i = 0; i < this.child.length; i ++) {
             if (this.child[i].pres(bounds)) {
-                nodes.concat(this.child[i].getWithMerged())
+                nodes.concat(this.child[i].getWithMerged(bounds))
             }
         }
         return nodes;
     }
     
   insert(node) {
+
       if (this.level == 0 && this.allnodes.indexOf(node) == -1) this.allnodes.push(node)
       if (this.child[0]) {
          
