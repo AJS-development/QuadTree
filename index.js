@@ -89,7 +89,7 @@ var QTree = class QTree {
         return;
         
       } else
-      if (this.objects.length > this.maxobj) {
+      if (this.nodes.length > this.maxobj) {
         this.split();
         this.nodes.forEach((n)=>{
               var ind = this.getIndex(n.bounds);
